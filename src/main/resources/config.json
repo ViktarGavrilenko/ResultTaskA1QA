@@ -1,0 +1,4 @@
+{
+  "web": "http://%s:%s@localhost:8080/web",
+  "api": "http://localhost:8080/api"
+}
