@@ -1,5 +1,9 @@
 {
   "login": "login",
   "password": "password",
-  "taskVariant": "2"
+  "taskVariant": "2",
+  "nameProject": "Nexage",
+  "infoMessage": "Project %s saved",
+  "testName": "Second variant",
+  "logger": "\\target\\log\\log.log"
 }
