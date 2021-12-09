@@ -1,19 +1,21 @@
 package com.example.utils;
 
 import com.example.models.TestModel;
-import org.jsoup.select.Elements;
 
 import java.util.List;
+import java.util.Map;
+
+import static com.example.utils.HtmlTableColumnNames.*;
 
 public class TestUtils {
-    public static TestModel getTestsFromElements(Elements cols) {
+    public static TestModel getTestsFromMap(Map<String, String> tuple) {
         TestModel test = new TestModel();
-        test.name = cols.get(0).text();
-        test.method = cols.get(1).text();
-        test.status = cols.get(2).text();
-        test.startTime = cols.get(3).text();
-        test.endTime = cols.get(4).text();
-        test.duration = cols.get(5).text();
+        test.name = tuple.get(COLUMN_NAME.getRequest());
+        test.method = tuple.get(COLUMN_METHOD.getRequest());
+        test.status = tuple.get(COLUMN_STATUS.getRequest());
+        test.startTime = tuple.get(COLUMN_START_TIME.getRequest());
+        test.endTime = tuple.get(COLUMN_END_TIME.getRequest());
+        test.duration = tuple.get(COLUMN_DURATION.getRequest());
         return test;
     }
 

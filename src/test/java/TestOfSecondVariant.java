@@ -11,14 +11,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static aquality.selenium.browser.AqualityServices.getBrowser;
+import static com.example.apiresponses.ApiParameters.*;
 import static com.example.apiresponses.ProcessingApiResponses.*;
 import static com.example.pageobject.AddProject.*;
 import static com.example.pageobject.AllTests.getTestsFromPage;
 import static com.example.pageobject.AllTests.isTestDisplayed;
 import static com.example.pageobject.Projects.*;
-import static com.example.apiresponses.ApiParameters.*;
 import static com.example.utils.BrowserUtils.switchToAddTab;
-import static com.example.utils.Const.*;
+import static com.example.utils.Const.TOKEN;
+import static com.example.utils.Const.WINDOWS_CLOSE;
 import static com.example.utils.StringUtils.*;
 import static com.example.utils.TestUtils.isTestsInListApi;
 import static org.testng.Assert.*;
@@ -33,6 +34,7 @@ public class TestOfSecondVariant {
     private static final String NAME_PROJECT = TEST_DATA_FILE.getValue("/nameProject").toString();
     private static final String SUCCESSFUL_MESSAGE = TEST_DATA_FILE.getValue("/successfulMessage").toString();
     private static final String TEST_NAME = TEST_DATA_FILE.getValue("/testName").toString();
+    private static final String IMAGE_PNG = TEST_DATA_FILE.getValue("/image_png").toString();
     protected static final String LOGGER_FILE =
             System.getProperty("user.dir") + TEST_DATA_FILE.getValue("/logger").toString();
 
