@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.apiresponses;
 
 public enum ApiParameters {
     variant,
@@ -10,8 +10,6 @@ public enum ApiParameters {
     env,
     browser,
     testId,
-    status,
     content,
     contentType
-
 }

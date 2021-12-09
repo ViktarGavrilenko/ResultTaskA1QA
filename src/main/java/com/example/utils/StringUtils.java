@@ -1,26 +1,30 @@
 package com.example.utils;
 
+import aquality.selenium.core.logging.Logger;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
+
+import static com.example.utils.Const.*;
 
 public class StringUtils {
     private static final Random RANDOM = new Random();
     private static final int NUMBER_OF_LETTERS_ALPHABET = 26;
     private static final int MAX_LENGTH = 5;
-    private static final String START_STR_OF_LOGGER = "Got browser profile options from settings file:";
 
     public static String getVariant(String str) {
         return str.substring(str.indexOf(" ") + 1);
     }
 
-    public static String getId(String str) {
+    public static String getIdFromLink(String str) {
         return str.substring(str.indexOf("=") + 1);
     }
 
     public static String getProjectName() {
-        String projectName = System.getProperty("user.dir");
+        String projectName = System.getProperty(USER_DIR);
         return projectName.substring(projectName.lastIndexOf('\\') + 1, projectName.length());
     }
 
@@ -50,8 +54,18 @@ public class StringUtils {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getInstance().info(FILE_ERROR + e);
+            throw new IllegalArgumentException(FILE_ERROR, e);
         }
         return String.valueOf(logText);
+    }
+
+    public static String getComputerName() {
+        Map<String, String> env = System.getenv();
+        if (env.containsKey(COMPUTER_NAME)) {
+            return env.get(COMPUTER_NAME);
+        } else {
+            return env.getOrDefault(HOSTNAME, UNKNOWN_COMPUTER);
+        }
     }
 }

@@ -11,24 +11,10 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import static com.example.utils.Const.ARGUMENT_IS_NOT_A_REQUEST;
+
 public class ApiUtils {
     private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
-    private static final String GET_REQUEST_ERROR = "GET request error ";
-
-    public static HttpResponse<String> sendGet(String url) {
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(url))
-                .setHeader("User-Agent", "HttpClient")
-                .build();
-
-        try {
-            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            Logger.getInstance().error(GET_REQUEST_ERROR + e);
-            throw new IllegalArgumentException(GET_REQUEST_ERROR, e);
-        }
-    }
 
     public static HttpResponse<String> sendPost(String url, Map<String, String> data) {
         HttpRequest request = HttpRequest.newBuilder()
@@ -41,7 +27,8 @@ public class ApiUtils {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            throw new IllegalArgumentException("The request argument is not a request  ", e);
+            Logger.getInstance().info(ARGUMENT_IS_NOT_A_REQUEST + e);
+            throw new IllegalArgumentException(ARGUMENT_IS_NOT_A_REQUEST, e);
         }
     }
 
