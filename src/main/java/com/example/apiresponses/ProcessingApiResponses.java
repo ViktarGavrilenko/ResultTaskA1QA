@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.utils.ApiUtils.sendPost;
-import static com.example.utils.Const.JSON_INCORRECT;
-import static com.example.utils.Const.NOT_DESERIALIZE;
 import static com.example.utils.JsonUtils.isJSONValid;
 
 public class ProcessingApiResponses {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final ISettingsFile CONFIG_FILE = new JsonSettingsFile("config.json");
     private static final String API_URL = CONFIG_FILE.getValue("/api").toString();
+    private static final String NOT_DESERIALIZE = "Could not deserialize: ";
+    private static final String JSON_INCORRECT = "JSON response is incorrect";
 
     public static String getToken(Map<String, String> data) {
         HttpResponse<String> response = sendPost(API_URL + PartsOfApiRequests.GET_TOKEN.getRequest(), data);

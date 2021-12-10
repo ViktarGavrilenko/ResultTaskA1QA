@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.pageobject;
 
 public enum HtmlTableColumnNames {
     COLUMN_NAME("Test name"),

@@ -11,10 +11,9 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static com.example.utils.Const.ARGUMENT_IS_NOT_A_REQUEST;
-
 public class ApiUtils {
     private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
+    public static final String ARGUMENT_IS_NOT_A_REQUEST = "The request argument is not a request ";
 
     public static HttpResponse<String> sendPost(String url, Map<String, String> data) {
         HttpRequest request = HttpRequest.newBuilder()

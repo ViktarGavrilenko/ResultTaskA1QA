@@ -3,7 +3,6 @@ import aquality.selenium.core.logging.Logger;
 import aquality.selenium.core.utilities.ISettingsFile;
 import aquality.selenium.core.utilities.JsonSettingsFile;
 import com.example.models.TestModel;
-import org.openqa.selenium.Cookie;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -17,9 +16,7 @@ import static com.example.pageobject.AddProject.*;
 import static com.example.pageobject.AllTests.getTestsFromPage;
 import static com.example.pageobject.AllTests.isTestDisplayed;
 import static com.example.pageobject.Projects.*;
-import static com.example.utils.BrowserUtils.switchToAddTab;
-import static com.example.utils.Const.TOKEN;
-import static com.example.utils.Const.WINDOWS_CLOSE;
+import static com.example.utils.BrowserUtils.*;
 import static com.example.utils.StringUtils.*;
 import static com.example.utils.TestUtils.isTestsInListApi;
 import static org.testng.Assert.*;
@@ -35,8 +32,10 @@ public class TestOfSecondVariant {
     private static final String SUCCESSFUL_MESSAGE = TEST_DATA_FILE.getValue("/successfulMessage").toString();
     private static final String TEST_NAME = TEST_DATA_FILE.getValue("/testName").toString();
     private static final String IMAGE_PNG = TEST_DATA_FILE.getValue("/image_png").toString();
-    protected static final String LOGGER_FILE =
+    private static final String LOGGER_FILE =
             System.getProperty("user.dir") + TEST_DATA_FILE.getValue("/logger").toString();
+
+    private static final String WINDOWS_CLOSE = "window.close();";
 
     @Test(description = "Testing second variant")
     public void testOfSecondVariant() {
@@ -50,11 +49,11 @@ public class TestOfSecondVariant {
 
         Logger.getInstance().info("Start STEP 2");
         Logger.getInstance().info("Go to the site " + WEB_URL);
-        getBrowser().goTo(String.format(WEB_URL, LOGIN, PASSWORD));
-        getBrowser().maximize();
+        goTo(String.format(WEB_URL, LOGIN, PASSWORD));
+        maximizeBrowser();
         assertTrue(isDisplayedPageProjects(), "Authorization completed");
-        getBrowser().getDriver().manage().addCookie(new Cookie(TOKEN, token));
-        getBrowser().refresh();
+        addCookie(token);
+        refresh();
         assertEquals(getVariantNumber(), TASK_VARIANT, "Incorrect variant number specified");
         Logger.getInstance().info("Completed STEP 2");
 
@@ -75,42 +74,45 @@ public class TestOfSecondVariant {
         Logger.getInstance().info("Completed STEP 3");
 
         Logger.getInstance().info("Start STEP 4");
-        getBrowser().goBack();
+        goBack();
         clickButtonAdd();
-        String projectTab = getBrowser().getDriver().getWindowHandle();
+        String projectTab = getWindowHandle();
         switchToAddTab(projectTab);
         String nameProject = getProjectName() + generateRandomText();
         writeNameProject(nameProject);
         clickSave();
         assertTrue(isSuccessfulMessage(String.format(SUCCESSFUL_MESSAGE, nameProject)), "Project not saved");
-        getBrowser().executeScript(WINDOWS_CLOSE);
-        ArrayList<String> numberTabs = new ArrayList<>(getBrowser().getDriver().getWindowHandles());
+        executeJS(WINDOWS_CLOSE);
+        ArrayList<String> numberTabs = new ArrayList<>(getWindowHandles());
         assertEquals(numberTabs.size(), 1, "Tab is not closed");
-        getBrowser().getDriver().switchTo().window(projectTab);
-        getBrowser().refresh();
+        switchToTab(projectTab);
+        refresh();
         assertTrue(getLinkProject(nameProject).state().isDisplayed(), "Project not added to the list");
         Logger.getInstance().info("Completed STEP 4");
 
         Logger.getInstance().info("Start STEP 5");
         goToProject(nameProject);
         data.clear();
-        data.put(SID.toString(), getBrowser().getDriver().getSessionId().toString());
+        data.put(SID.toString(), getSessionId());
         data.put(projectName.toString(), nameProject);
         data.put(testName.toString(), TEST_NAME);
         String method = getClass().getName() + "#" + Thread.currentThread().getStackTrace()[1].getMethodName();
         data.put(methodName.toString(), method);
         data.put(env.toString(), getComputerName());
-        data.put(browser.toString(), getBrowser().getBrowserName().name());
+        data.put(browser.toString(), getBrowserName());
         String idTest = createTestRecord(data);
+
         data.clear();
         data.put(testId.toString(), idTest);
         data.put(content.toString(), getLogOfTest(LOGGER_FILE));
         sendLogs(data);
+
         data.clear();
         data.put(testId.toString(), idTest);
-        data.put(content.toString(), Base64.getEncoder().encodeToString(getBrowser().getScreenshot()));
+        data.put(content.toString(), encodingBytesIntoBase64(getScreenshot()));
         data.put(contentType.toString(), IMAGE_PNG);
         sendApp(data);
+
         assertTrue(isTestDisplayed(), "Test is not displayed");
         ArrayList<TestModel> test = getTestsFromPage();
         assertEquals(test.get(0).name, TEST_NAME, "Test names do not match");

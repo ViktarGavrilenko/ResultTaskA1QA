@@ -13,10 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.utils.Const.*;
 import static com.example.utils.TestUtils.getTestsFromMap;
 
 public class JsoupUtils {
+    public static final String GET_TESTS_FROM_HTML_TABLE = "Get tests from html table";
+    public static final String TH_TD = "th,td";
+    public static final String TR = "tr";
+
     public static ArrayList<TestModel> getTestsFromHtmlTable(String body) {
         Logger.getInstance().info(GET_TESTS_FROM_HTML_TABLE);
         Document doc = Jsoup.parse(body, StandardCharsets.UTF_8.name());

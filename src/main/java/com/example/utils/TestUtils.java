@@ -5,7 +5,7 @@ import com.example.models.TestModel;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.utils.HtmlTableColumnNames.*;
+import static com.example.pageobject.HtmlTableColumnNames.*;
 
 public class TestUtils {
     public static TestModel getTestsFromMap(Map<String, String> tuple) {
