@@ -4,13 +4,13 @@ public enum ContentType {
     IMAGE_PNG("image/png"),
     TEXT_HTML("text/html");
 
-    private final String contentType;
+    private final String type;
 
-    ContentType(String contentType) {
-        this.contentType = contentType;
+    ContentType(String type) {
+        this.type = type;
     }
 
     public String getContentType() {
-        return contentType;
+        return type;
     }
 }
