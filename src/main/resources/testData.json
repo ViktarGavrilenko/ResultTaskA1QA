@@ -4,7 +4,5 @@
   "taskVariant": "2",
   "nameProject": "Nexage",
   "successfulMessage": "Project %s saved",
-  "testName": "Second variant",
-  "logger": "\\target\\log\\log.log",
-  "image_png": "image/png"
+  "testName": "Second variant"
 }
